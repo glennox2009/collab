@@ -17,11 +17,11 @@ export default function CreateDocumentSection({
     nameError
 }: CreateDocumentSectionProps) {
     return (
-        <>
+        <div className="space-y-6">
             {/* Name Input */}
             <InputField
                 label="Your Name"
-                placeholder="Enter your name"
+                placeholder="Enter your name to get started"
                 value={userName}
                 onChange={onUserNameChange}
                 error={nameError}
@@ -37,6 +37,6 @@ export default function CreateDocumentSection({
 
             {/* Divider */}
             <Divider text="or join existing" />
-        </>
+        </div>
     )
 }

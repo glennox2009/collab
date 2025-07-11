@@ -16,10 +16,10 @@ export default function JoinDocumentSection({
     documentIdError
 }: JoinDocumentSectionProps) {
     return (
-        <div className="space-y-4">
+        <div className="space-y-6">
             <InputField
                 label="Document ID"
-                placeholder="Enter document ID"
+                placeholder="Enter the document ID to join"
                 value={documentId}
                 onChange={onDocumentIdChange}
                 error={documentIdError}

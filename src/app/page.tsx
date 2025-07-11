@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Card, { CardHeader, CardBody } from '@/components/Card'
 import CreateDocumentSection from '@/components/CreateDocumentSection'
 import JoinDocumentSection from '@/components/JoinDocumentSection'
+import { InfoIcon, DocumentIcon } from '@/components/Icons'
 
 interface FormErrors {
   name: string
@@ -64,13 +65,18 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#f4f7fa' }}>
-      <div className="w-full max-w-md mx-4">
+    <div className="min-h-screen flex items-center justify-center px-4 py-8" style={{ backgroundColor: '#f4f7fa' }}>
+      <div className="w-full max-w-lg">
         {/* Main Card */}
-        <Card>
+        <Card className="shadow-2xl">
           <CardHeader>
-            <h1 className="text-2xl font-bold text-white mb-2">Collaborative Editor</h1>
-            <p className="text-gray-300 text-sm">Create or join a document to start collaborating</p>
+            <div className="mb-4">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/20 flex items-center justify-center">
+                <DocumentIcon className="w-8 h-8 text-white" />
+              </div>
+              <h1 className="text-3xl font-bold text-white mb-3">Collaborative Editor</h1>
+              <p className="text-blue-100 text-base leading-relaxed">Create or join a document to start collaborating in real-time</p>
+            </div>
           </CardHeader>
 
           <CardBody>
@@ -91,10 +97,13 @@ export default function HomePage() {
         </Card>
 
         {/* Footer */}
-        <div className="text-center mt-6">
-          <p className="text-sm" style={{ color: '#8eabcc' }}>
-            Documents are shared in real-time with all participants
-          </p>
+        <div className="text-center mt-8">
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm shadow-sm">
+            <InfoIcon className="w-4 h-4 mr-2 text-blue-600" />
+            <p className="text-sm font-medium" style={{ color: '#495884' }}>
+              Documents sync in real-time with all participants
+            </p>
+          </div>
         </div>
       </div>
     </div>
