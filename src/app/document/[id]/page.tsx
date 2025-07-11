@@ -24,21 +24,21 @@ function DraggableMonitor({ children }: { children: React.ReactNode }) {
         document.addEventListener('mousemove', onMouseMove)
         document.addEventListener('mouseup', onMouseUp)
     }
-    const onMouseMove = (e: MouseEvent) => {
+    const onMouseMove = React.useCallback((e: MouseEvent) => {
         if (!dragging || !offset.current) return
         setPos({ x: e.clientX - offset.current.x, y: e.clientY - offset.current.y })
-    }
-    const onMouseUp = () => {
+    }, [dragging])
+    const onMouseUp = React.useCallback(() => {
         setDragging(false)
         document.removeEventListener('mousemove', onMouseMove)
         document.removeEventListener('mouseup', onMouseUp)
-    }
+    }, [onMouseMove])
     useEffect(() => {
         return () => {
             document.removeEventListener('mousemove', onMouseMove)
             document.removeEventListener('mouseup', onMouseUp)
         }
-    }, [])
+    }, [onMouseMove, onMouseUp])
     return (
         <div
             ref={nodeRef}
@@ -88,7 +88,7 @@ export default function DocumentPage() {
                 lastUpdateTimeRef.current = data.lastUpdated
                 setIsConnected(true)
             }
-        } catch (error) {
+        } catch {
             setIsConnected(false)
         }
     }, [documentId])
@@ -113,7 +113,7 @@ export default function DocumentPage() {
                 await fetch(`/api/document/${documentId}/join`, {
                     method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userName })
                 });
-            } catch {}
+            } catch { }
             await fetchInitialDocument();
             if (isCleaningUp) return;
             const eventSource = new EventSource(`/api/document/${documentId}/events`);
@@ -130,7 +130,7 @@ export default function DocumentPage() {
                     } else if (data.type === 'userUpdate') {
                         setUsers(data.users || []);
                     }
-                } catch {}
+                } catch { }
             };
             eventSource.onerror = () => {
                 setIsConnected(false);
@@ -152,7 +152,7 @@ export default function DocumentPage() {
             if (eventSourceRef.current) { eventSourceRef.current.close(); eventSourceRef.current = null; }
             fetch(`/api/document/${documentId}/leave`, {
                 method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userName })
-            }).catch(() => {});
+            }).catch(() => { });
         };
     }, [documentId, userName, fetchInitialDocument]);
 
@@ -177,7 +177,7 @@ export default function DocumentPage() {
             } else {
                 setSaveError('Failed to save changes. Please check your connection.')
             }
-        } catch (error) {
+        } catch {
             setSaveError('Failed to save changes. You appear to be offline.')
         } finally {
             setIsSaving(false)
@@ -211,7 +211,7 @@ export default function DocumentPage() {
         setIsSaving(true)
 
         updateDocument(newContent, cursorPosition, false)
-    }, [content, documentId, userName, updateDocument])
+    }, [content, updateDocument])
 
     const copyDocumentLink = () => {
         const url = window.location.href

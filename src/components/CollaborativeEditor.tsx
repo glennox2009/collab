@@ -53,7 +53,7 @@ const CollaborativeEditor = forwardRef<HTMLTextAreaElement, CollaborativeEditorP
             onChange(newContent, position)
         }, [onChange])
 
-        const [textareaHeight, setTextareaHeight] = useState('auto')
+        // ...existing code...
         const shadowRef = useRef<HTMLTextAreaElement>(null)
         const handleSelectionChange = useCallback(() => {
             if (ref && 'current' in ref && ref.current) {
@@ -79,7 +79,7 @@ const CollaborativeEditor = forwardRef<HTMLTextAreaElement, CollaborativeEditorP
         useEffect(() => {
             if (shadowRef.current) {
                 shadowRef.current.value = localContent + '\n'
-                setTextareaHeight(shadowRef.current.scrollHeight + 'px')
+                // Removed textareaHeight logic (was unused)
             }
         }, [localContent])
 
