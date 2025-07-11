@@ -1,7 +1,7 @@
 import InputField from './InputField'
 import Button from './Button'
 import Divider from './Divider'
-import { PlusIcon, LoginIcon } from './Icons'
+import { PlusIcon } from './Icons'
 
 interface CreateDocumentSectionProps {
     userName: string
