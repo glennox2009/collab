@@ -5,9 +5,10 @@ const documents = new Map<string, { content: string; users: Set<string>; lastUpd
 
 export async function POST(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
-    const documentId = params.id
+    const { id } = await params
+    const documentId = id
     const { userName } = await request.json()
 
     if (documents.has(documentId)) {

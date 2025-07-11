@@ -5,9 +5,10 @@ const documents = new Map<string, { content: string; users: Set<string>; lastUpd
 
 export async function GET(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
-    const documentId = params.id
+    const { id } = await params
+    const documentId = id
 
     if (!documents.has(documentId)) {
         // Create new document if it doesn't exist
@@ -29,9 +30,10 @@ export async function GET(
 
 export async function PUT(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
-    const documentId = params.id
+    const { id } = await params
+    const documentId = id
     const { content, userName } = await request.json()
 
     if (!documents.has(documentId)) {
